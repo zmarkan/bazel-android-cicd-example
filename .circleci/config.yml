@@ -31,10 +31,7 @@ commands:
       - run:
           name: Run tests
           command: bazel test //app/src:unit_tests # Depending on your Bazel package and target
-      - run: 
-          name: Store test results
-          command: 
-        
+          
 jobs:
   build:
     docker:
@@ -46,7 +43,8 @@ jobs:
       - bazel-test
       - store_test_results:
           path: ~/project/bazel-testlogs/app/src/unit_tests
-      
+      - store_artifacts:
+          path: ~/project/bazel-testlogs/app/src/unit_tests
       - bazel-build
       - store_artifacts:
           path: ~/project/bazel-bin/app/src/main/my_bazel_app.apk
