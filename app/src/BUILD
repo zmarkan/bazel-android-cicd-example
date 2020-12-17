@@ -1,0 +1,93 @@
+load("@rules_jvm_external//:defs.bzl", "artifact")
+load("@rules_android//android:rules.bzl", "android_library", "android_binary", "android_local_test")
+#load("@rules_java//java:rules.bzl", "java_test, "android_binary", "android_local_test")
+load("@io_bazel_rules_kotlin//kotlin:kotlin.bzl", "kt_android_library")
+
+package(default_visibility = ["//visibility:private"])
+
+PACKAGE_NAME = "com.circleci.weathersimple"
+MANIFEST = "main/AndroidManifest.xml"
+
+android_library(
+    name = "android_resources",
+    resource_files = glob(["main/res/**"]),
+    custom_package = PACKAGE_NAME,
+    manifest = MANIFEST,
+    deps = [
+        artifact('com.google.android.material:material'),
+        artifact('androidx.constraintlayout:constraintlayout'),
+    ]
+)
+
+
+kt_android_library(
+    name = "kotlin_sources",
+    custom_package = PACKAGE_NAME,
+    srcs = glob(["main/java/**/*.kt"]),
+    manifest = MANIFEST,
+    deps = [
+        ':android_resources',
+        artifact('androidx.core:core-ktx'),
+        artifact('androidx.appcompat:appcompat'),
+        artifact('com.google.android.material:material'),
+        artifact('androidx.constraintlayout:constraintlayout'),
+        artifact("androidx.core:core"),
+        artifact("androidx.lifecycle:lifecycle-runtime"),
+        artifact("androidx.lifecycle:lifecycle-viewmodel"),
+        artifact("androidx.lifecycle:lifecycle-common"),
+
+    ]
+)
+
+kt_android_library(
+    name = "kotlin_unit_test_sources",
+    srcs = glob(["test/java/**/*.kt"]),
+    custom_package = PACKAGE_NAME,
+    manifest = MANIFEST,
+    deps = [
+        ':kotlin_sources',
+        "@maven//:androidx_test_ext_junit",
+        "@maven//:org_assertj_assertj_core",
+        "@maven//:org_robolectric_robolectric",
+        "@maven//:org_robolectric_shadows_framework",
+        "@robolectric//bazel:android-all",
+    ]
+)
+
+android_local_test(
+    name="unit_tests",
+    custom_package = PACKAGE_NAME,
+    manifest = MANIFEST,
+    manifest_values = {
+            "minSdkVersion": "21",
+            "versionCode" : "1",
+            "versionName" : "0.1",
+            "targetSdkVersion": "29",
+        },
+    test_class = "com.circleci.weathersimple.ExampleUnitTest",
+    deps = [
+        ":kotlin_sources",
+        ":kotlin_unit_test_sources",
+
+        "@maven//:androidx_test_ext_junit",
+        "@maven//:org_assertj_assertj_core",
+        "@maven//:org_robolectric_robolectric",
+        "@maven//:org_robolectric_shadows_framework",
+        "@robolectric//bazel:android-all",
+    ]
+)
+
+android_binary(
+    name = "app",
+    manifest = MANIFEST,
+    manifest_values = {
+            "minSdkVersion": "21",
+            "versionCode" : "2",
+            "versionName" : "0.2",
+            "targetSdkVersion": "29",
+        },
+    custom_package = PACKAGE_NAME,
+    deps = [
+        ':kotlin_sources'
+    ],
+)
