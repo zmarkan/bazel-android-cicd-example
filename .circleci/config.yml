@@ -1,13 +1,52 @@
-# Use the latest 2.1 version of CircleCI pipeline process engine. See: https://circleci.com/docs/2.0/configuration-reference
+
 version: 2.1
-# Use a package of configuration called an orb.
+
 orbs:
-  # Declare a dependency on the welcome-orb
-  welcome: circleci/welcome-orb@0.4.1
-# Orchestrate or schedule a set of jobs
-workflows:
-  # Name the workflow "welcome"
-  welcome:
-    # Run the welcome/run job in its own container
-    jobs:
-      - welcome/run
+  android: circleci/android@0.2.3
+
+commands:
+  setup-bazel:
+    description: |
+      Setup the Bazel build system used for building Android projects
+    steps:
+      - run:
+          name: Add Bazel Apt repository
+          command: |
+            sudo apt install curl gnupg
+            curl -fsSL https://bazel.build/bazel-release.pub.gpg | gpg --dearmor > bazel.gpg
+            sudo mv bazel.gpg /etc/apt/trusted.gpg.d/
+            echo "deb [arch=amd64] https://storage.googleapis.com/bazel-apt stable jdk1.8" | sudo tee /etc/apt/sources.list.d/bazel.list
+      - run:
+          name: Install Bazel from Apt
+          command: sudo apt update && sudo apt install bazel
+  bazel-build:
+    description: Build the Bazel app
+    steps:
+      - run:
+          name: Run build
+          command: bazel build //app/src:app # Depending on your Bazel package and target
+  bazel-test:
+    description: Run tests
+    steps:
+      - run:
+          name: Run tests
+          command: bazel test //app/src:unit_tests # Depending on your Bazel package and target
+      - run: 
+          name: Store test results
+          command: 
+        
+jobs:
+  build:
+    docker:
+      - image: circleci/android:api-29
+    steps:
+      - checkout
+      - android/accept-licenses
+      - setup-bazel
+      - bazel-test
+      - store_test_results:
+          path: ~/project/bazel-testlogs/app/src/unit_tests
+      
+      - bazel-build
+      - store_artifacts:
+          path: ~/project/bazel-bin/app/src/main/my_bazel_app.apk

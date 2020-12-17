@@ -13,7 +13,8 @@
 .externalNativeBuild
 .cxx
 local.properties
-bazel-*/**
+bazel-*
+
 
 .aswb/.idea/**
 .aswb/.blaze/**

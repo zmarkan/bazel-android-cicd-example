@@ -3,7 +3,7 @@ package com.circleci.bazelsample
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.TextView
-import com.circleci.weathersimple.R
+import com.circleci.bazelsample.R
 
 class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {

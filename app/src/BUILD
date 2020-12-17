@@ -5,7 +5,7 @@ load("@io_bazel_rules_kotlin//kotlin:kotlin.bzl", "kt_android_library")
 
 package(default_visibility = ["//visibility:private"])
 
-PACKAGE_NAME = "com.circleci.weathersimple"
+PACKAGE_NAME = "com.circleci.bazelsample"
 MANIFEST = "main/AndroidManifest.xml"
 
 android_library(
@@ -64,7 +64,7 @@ android_local_test(
             "versionName" : "0.1",
             "targetSdkVersion": "29",
         },
-    test_class = "com.circleci.weathersimple.ExampleUnitTest",
+    test_class = "com.circleci.bazelsample.ExampleUnitTest",
     deps = [
         ":kotlin_sources",
         ":kotlin_unit_test_sources",
