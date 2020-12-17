@@ -47,4 +47,4 @@ jobs:
       - store_artifacts:
           path: ~/project/bazel-testlogs/app/src/unit_tests
       - store_artifacts:
-          path: ~/project/bazel-bin/app/src/main/app.apk
+          path: ~/project/bazel-bin/app/src/app.apk
