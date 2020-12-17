@@ -5,7 +5,7 @@ Project to accompany a blog post on CircleCI blog.
 See .circleci for integration instructioins
 
 [![CircleCI](https://circleci.com/gh/zmarkan/bazel-android-cicd-example
-.svg?style=svg)](https://app.circleci.com/pipelines/github/zmarkan/bazel-android-cicd-example)]
+.svg?style=svg)](https://app.circleci.com/pipelines/github/zmarkan/bazel-android-cicd-example)
 
 ## Running locally
 
