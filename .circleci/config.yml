@@ -31,11 +31,11 @@ commands:
       - run:
           name: Run tests
           command: bazel test //app/src:unit_tests # Depending on your Bazel package and target
-          
+
 jobs:
   build:
     docker:
-      - image: circleci/android:api-29
+      - image: circleci/android:api-30
     steps:
       - checkout
       - android/accept-licenses
