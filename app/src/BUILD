@@ -1,6 +1,5 @@
 load("@rules_jvm_external//:defs.bzl", "artifact")
 load("@rules_android//android:rules.bzl", "android_library", "android_binary", "android_local_test")
-#load("@rules_java//java:rules.bzl", "java_test, "android_binary", "android_local_test")
 load("@io_bazel_rules_kotlin//kotlin:kotlin.bzl", "kt_android_library")
 
 package(default_visibility = ["//visibility:private"])
@@ -46,10 +45,9 @@ kt_android_library(
     manifest = MANIFEST,
     deps = [
         ':kotlin_sources',
-        "@maven//:androidx_test_ext_junit",
-        "@maven//:org_assertj_assertj_core",
-        "@maven//:org_robolectric_robolectric",
-        "@maven//:org_robolectric_shadows_framework",
+        artifact("androidx.test.ext:junit"),
+        artifact("org.robolectric:robolectric"),
+        artifact("org.assertj:assertj-core"),
         "@robolectric//bazel:android-all",
     ]
 )
@@ -68,11 +66,9 @@ android_local_test(
     deps = [
         ":kotlin_sources",
         ":kotlin_unit_test_sources",
-
-        "@maven//:androidx_test_ext_junit",
-        "@maven//:org_assertj_assertj_core",
-        "@maven//:org_robolectric_robolectric",
-        "@maven//:org_robolectric_shadows_framework",
+        artifact("androidx.test.ext:junit"),
+        artifact("org.robolectric:robolectric"),
+        artifact("org.assertj:assertj-core"),
         "@robolectric//bazel:android-all",
     ]
 )
