@@ -41,10 +41,10 @@ jobs:
       - android/accept-licenses
       - setup-bazel
       - bazel-test
+      - bazel-build
       - store_test_results:
           path: ~/project/bazel-testlogs/app/src/unit_tests
       - store_artifacts:
           path: ~/project/bazel-testlogs/app/src/unit_tests
-      - bazel-build
       - store_artifacts:
-          path: ~/project/bazel-bin/app/src/main/my_bazel_app.apk
+          path: ~/project/bazel-bin/app/src/main/app.apk
