@@ -8,6 +8,10 @@ commands:
   setup-bazel:
     description: |
       Setup the Bazel build system used for building Android projects
+    parameters:
+      bazel-version:
+        type: string
+        default: "bazel"
     steps:
       - run:
           name: Add Bazel Apt repository
@@ -19,32 +23,27 @@ commands:
       - run:
           name: Install Bazel from Apt
           command: | 
-            bazel_version=3.7.2 # Pin specific Bazel version
-            sudo apt update && sudo apt install $bazel_version
-            alias bazel=$bazel_version
-  bazel-build:
-    description: Build the Bazel app
-    steps:
-      - run:
-          name: Run build
-          command: bazel build //app/src:app # Depending on your Bazel package and target
-  bazel-test:
-    description: Run tests
-    steps:
-      - run:
-          name: Run tests
-          command: bazel test //app/src:unit_tests # Depending on your Bazel package and target
+            sudo apt update && sudo apt install << parameters.bazel-version >>
 
 jobs:
-  build:
+  build-and-test:
+    parameters:
+      bazel-version:
+        description: "Pinned Bazel version Replace with your one"
+        default: "bazel-3.7.2"
+        type: string
     docker:
       - image: circleci/android:api-30
     steps:
       - checkout
       - android/accept-licenses
       - setup-bazel
-      - bazel-test
-      - bazel-build
+      - run:
+          name: Run tests
+          command: << parameters.bazel-version >> test //app/src:unit_tests # Depending on your Bazel package and target
+      - run:
+          name: Run build
+          command: << parameters.bazel-version >> build //app/src:app # Depending on your Bazel package and target
       - store_test_results:
           path: ~/project/bazel-testlogs/app/src/unit_tests
       - store_artifacts:
