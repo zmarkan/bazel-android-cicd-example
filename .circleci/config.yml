@@ -26,7 +26,7 @@ commands:
             sudo apt update && sudo apt install << parameters.bazel-version >>
 
 jobs:
-  build-and-test:
+  build:
     parameters:
       bazel-version:
         description: "Pinned Bazel version Replace with your one"
