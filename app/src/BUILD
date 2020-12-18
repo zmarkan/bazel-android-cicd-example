@@ -1,5 +1,5 @@
 load("@rules_jvm_external//:defs.bzl", "artifact")
-load("@rules_android//android:rules.bzl", "android_library", "android_binary", "android_local_test")
+load("@rules_android//android:rules.bzl", "android_binary", "android_local_test")
 load("@io_bazel_rules_kotlin//kotlin:kotlin.bzl", "kt_android_library")
 
 package(default_visibility = ["//visibility:private"])
@@ -7,25 +7,13 @@ package(default_visibility = ["//visibility:private"])
 PACKAGE_NAME = "com.circleci.bazelsample"
 MANIFEST = "main/AndroidManifest.xml"
 
-android_library(
-    name = "android_resources",
-    resource_files = glob(["main/res/**"]),
-    custom_package = PACKAGE_NAME,
-    manifest = MANIFEST,
-    deps = [
-        artifact('com.google.android.material:material'),
-        artifact('androidx.constraintlayout:constraintlayout'),
-    ]
-)
-
-
 kt_android_library(
     name = "kotlin_sources",
     custom_package = PACKAGE_NAME,
+    resource_files = glob(["main/res/**"]),
     srcs = glob(["main/java/**/*.kt"]),
     manifest = MANIFEST,
     deps = [
-        ':android_resources',
         artifact('androidx.core:core-ktx'),
         artifact('androidx.appcompat:appcompat'),
         artifact('com.google.android.material:material'),
@@ -63,7 +51,6 @@ android_local_test(
         },
     test_class = "com.circleci.bazelsample.ExampleUnitTest",
     deps = [
-        ":kotlin_sources",
         ":kotlin_unit_test_sources",
         "@robolectric//bazel:android-all",
     ]
