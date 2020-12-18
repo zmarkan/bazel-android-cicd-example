@@ -48,7 +48,6 @@ kt_android_library(
         artifact("androidx.test.ext:junit"),
         artifact("org.robolectric:robolectric"),
         artifact("org.assertj:assertj-core"),
-        "@robolectric//bazel:android-all",
     ]
 )
 
@@ -66,9 +65,6 @@ android_local_test(
     deps = [
         ":kotlin_sources",
         ":kotlin_unit_test_sources",
-        artifact("androidx.test.ext:junit"),
-        artifact("org.robolectric:robolectric"),
-        artifact("org.assertj:assertj-core"),
         "@robolectric//bazel:android-all",
     ]
 )

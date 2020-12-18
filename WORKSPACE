@@ -54,8 +54,8 @@ maven_install(
     fetch_sources = True,
 )
 
-rules_kotlin_version = "v1.5.0-alpha-1"
-rules_kotlin_sha = "8b5c656030558a54c5a118f216c8807e1f009675d6fc546704ee7ec74c95af12"
+# rules_kotlin_version = "v1.5.0-alpha-1"
+# rules_kotlin_sha = "8b5c656030558a54c5a118f216c8807e1f009675d6fc546704ee7ec74c95af12"
 
 rules_kotlin_version = "legacy-1.4.0-rc4"
 rules_kotlin_sha = "9cc0e4031bcb7e8508fd9569a81e7042bbf380604a0157f796d06d511cff2769"
