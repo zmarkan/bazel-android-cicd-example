@@ -51,3 +51,5 @@ jobs:
           path: ~/project/bazel-testlogs/app/src/unit_tests
       - store_artifacts:
           path: ~/project/bazel-bin/app/src/app.apk
+      - store_artifacts:
+          path: ~/project/bazel-bin/app/src/app_unsigned.apk
