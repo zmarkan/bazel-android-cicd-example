@@ -18,7 +18,7 @@ commands:
             echo "deb [arch=amd64] https://storage.googleapis.com/bazel-apt stable jdk1.8" | sudo tee /etc/apt/sources.list.d/bazel.list
       - run:
           name: Install Bazel from Apt
-          command: sudo apt update && sudo apt install bazel
+          command: sudo apt update && sudo apt install bazel-3.7.2
   bazel-build:
     description: Build the Bazel app
     steps:
