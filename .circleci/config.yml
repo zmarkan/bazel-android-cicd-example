@@ -37,7 +37,8 @@ jobs:
     steps:
       - checkout
       - android/accept-licenses
-      - setup-bazel
+      - setup-bazel:
+          bazel-version: <<parameters.bazel-version>>
       - run:
           name: Run tests
           command: << parameters.bazel-version >> test //app/src:unit_tests # Depending on your Bazel package and target
